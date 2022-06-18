@@ -3,9 +3,10 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 import userEvent from '@testing-library/user-event';
+import { toast } from 'react-toastify';
 
 function CreateListing() {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
+  const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: 'rent',
@@ -61,8 +62,47 @@ function CreateListing() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, isMounted, navigate]);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+
+    if (discountedPrice >= regularPrice) {
+      setLoading(false);
+      toast.error('Discounted price must be less than regular price.');
+      return;
+    }
+
+    if (images.lenth > 6) {
+      setLoading(false);
+      toast.error('You can only upload up to 6 images.');
+      return;
+    }
+
+    let geolocation = {};
+    let location;
+
+    if (geolocationEnabled) {
+      const response = await fetch(
+        `https://geocode.maps.co/search?q=${address}`
+      );
+      const data = await response.json();
+      geolocation.lat = data[0]?.lat ?? 0;
+      geolocation.lng = data[0]?.lon ?? 0;
+      location = data[0]?.display_name ?? undefined;
+
+      if (location === undefined || location.includes('undefined')) {
+        setLoading(false);
+        toast.error('Could not find location. Please enter a valid address.');
+        return;
+      }
+    } else {
+      geolocation.lat = latitude;
+      geolocation.lng = longitude;
+      location = address;
+    }
+
+    setLoading(false);
   };
 
   const onMutate = (e) => {
