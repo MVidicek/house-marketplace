@@ -95,6 +95,7 @@ function CreateListing() {
         `https://geocode.maps.co/search?q=${address}`
       );
       const data = await response.json();
+      console.log(data);
       geolocation.lat = data[0]?.lat ?? 0;
       geolocation.lng = data[0]?.lon ?? 0;
       location = data[0]?.display_name ?? undefined;
@@ -155,7 +156,24 @@ function CreateListing() {
       return;
     });
 
+    const formDataCopy = {
+      ...formData,
+      imgUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
+
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+    location && (formDataCopy.location = location);
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+    const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+
     setLoading(false);
+
+    toast.success('Listing created successfully.');
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
   const onMutate = (e) => {
