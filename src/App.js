@@ -11,6 +11,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Navbar from './components/Navbar';
 import CreateListing from './pages/CreateListing';
 import Listing from './pages/Listing';
+import Contact from './pages/Contact';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,6 +34,7 @@ function App() {
             path='/category/:categoryName/:listingId'
             element={<Listing />}
           />
+          <Route path='/contact/:landlordId' element={<Contact />} />
         </Routes>
         <Navbar />
       </Router>
