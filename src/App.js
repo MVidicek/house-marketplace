@@ -10,7 +10,7 @@ import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
 import Navbar from './components/Navbar';
 import CreateListing from './pages/CreateListing';
-import Listing from './hooks/Listing';
+import Listing from './pages/Listing';
 
 import 'react-toastify/dist/ReactToastify.css';
 
