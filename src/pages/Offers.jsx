@@ -17,6 +17,7 @@ import ListingItem from '../components/ListingItem';
 function Offers() {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const params = useParams();
 
@@ -31,11 +32,14 @@ function Offers() {
           listingsRef,
           where('offer', '==', true),
           orderBy('timestamp', 'desc'),
-          limit(10)
+          limit(5)
         );
 
         // Execute query
         const querySnap = await getDocs(q);
+
+        const lastVisible = querySnap.docs[querySnap.docs.length - 1];
+        setLastFetchedListing(lastVisible);
 
         const listings = [];
 
@@ -55,6 +59,42 @@ function Offers() {
 
     fetchListings();
   }, []);
+
+  const onFetchMoreListings = async () => {
+    try {
+      // Get reference
+      const listingsRef = collection(db, 'listings');
+
+      // Create a query
+      const q = query(
+        listingsRef,
+        where('offer', '==', true),
+        orderBy('timestamp', 'desc'),
+        limit(5),
+        startAfter(lastFetchedListing)
+      );
+
+      // Execute query
+      const querySnap = await getDocs(q);
+
+      const lastVisible = querySnap.docs[querySnap.docs.length - 1];
+      setLastFetchedListing(lastVisible);
+
+      const listings = [];
+
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+
+      setListings((prevState) => [...prevState, ...listings]);
+      setIsLoading(false);
+    } catch (error) {
+      toast.error('Error fetching listings');
+    }
+  };
 
   return (
     <div className='category' id='centerContainer'>
@@ -77,6 +117,13 @@ function Offers() {
               ))}
             </ul>
           </main>
+          <br />
+          <br />
+          {lastFetchedListing && (
+            <p className='loadMore' onClick={onFetchMoreListings}>
+              Load More
+            </p>
+          )}
         </>
       ) : (
         <p>There are no current offers.</p>
