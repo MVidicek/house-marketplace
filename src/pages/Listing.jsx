@@ -40,21 +40,17 @@ function Listing() {
 
   return (
     <main>
-      <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y]}
-        slidesPerView={1}
-        pagination={{ clickable: true }}
-      >
+      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
         {listing.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
-            <div
-              style={{
-                backgroundImage: `url(${listing.imgUrls[index]}) center no-repeat`,
-                backgroundSize: 'cover',
-              }}
-              className='swiperSlideDiv'
-            >
-              <img src={url} alt={index} className='swiperSlideImg' />
+            <div class='flex-container' id='centerContainer'>
+              <div
+                style={{
+                  background: `url(${url}) center no-repeat`,
+                  backgroundSize: 'cover',
+                }}
+                className='swiperSlideDiv content'
+              ></div>
             </div>
           </SwiperSlide>
         ))}
@@ -74,7 +70,7 @@ function Listing() {
       </div>
       {shareLinkCopied && <p className='linkCopied'>Link copied!</p>}
 
-      <div className='listingDetails'>
+      <div className='listingDetails' id='centerContainer'>
         <p className='listingName'>
           {listing.name} - $
           {listing.offer

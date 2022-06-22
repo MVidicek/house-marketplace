@@ -5,12 +5,12 @@ import Slider from '../components/Slider';
 
 function Explore() {
   return (
-    <div className='explore'>
+    <div className='explore' id='centerContainer'>
       <header>
         <p className='pageHeader'>Explore</p>
       </header>
 
-      <main>
+      <main style={{ marginBottom: '100px' }}>
         <Slider />
         <p className='exploreCategoryHeading'>Categories</p>
         <div className='exploreCategories'>

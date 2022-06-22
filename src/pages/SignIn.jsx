@@ -41,7 +41,7 @@ function SignIn() {
 
   return (
     <>
-      <div className='pageContainer'>
+      <div className='pageContainer' id='centerContainer'>
         <header>
           <p className='pageHeader'>Welcome Back!</p>
         </header>

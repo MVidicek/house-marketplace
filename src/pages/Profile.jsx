@@ -50,7 +50,7 @@ function Profile() {
   };
 
   return (
-    <div className='profile'>
+    <div className='profile' id='centerContainer'>
       <header className='profileHeader'>
         <p className='pageHeader'>My Profile</p>
         <button type='button' className='logOut' onClick={onLogout}>
