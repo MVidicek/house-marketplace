@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Spinner from '../components/Spinner';
 
 function EditListing() {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(true);
+  const [geolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState(null);
   const [formData, setFormData] = useState({
