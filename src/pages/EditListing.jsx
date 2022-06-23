@@ -242,7 +242,7 @@ function EditListing() {
   }
 
   return (
-    <div className='profile'>
+    <div className='profile' id='centerContainer'>
       <header>
         <p className='pageHeader'>Edit Listing</p>
       </header>
