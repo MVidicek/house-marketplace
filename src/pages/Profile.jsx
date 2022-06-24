@@ -107,7 +107,7 @@ function Profile() {
         </button>
       </header>
 
-      <main>
+      <main style={{ marginBottom: '100px' }}>
         <div className='profileDetailsHeader'>
           <p className='profileDetailsText'>Profile Details</p>
           <p

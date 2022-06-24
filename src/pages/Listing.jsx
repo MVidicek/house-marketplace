@@ -39,7 +39,7 @@ function Listing() {
   }
 
   return (
-    <main>
+    <main style={{ marginBottom: '100px' }}>
       <Swiper slidesPerView={1} pagination={{ clickable: true }}>
         {listing.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
@@ -133,7 +133,7 @@ function Listing() {
             to={`/contact/${listing.userRef}?listingName=${listing.name}`}
             className='primaryButton'
           >
-            Contact Landlort
+            Contact Landlord
           </Link>
         )}
       </div>
