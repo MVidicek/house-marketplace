@@ -21,11 +21,6 @@ Some of the concepts and technologies learned and used inside the scope of this 
   <img src = "/images/house-marketplace-offer.JPG" width=700>
 </p>
 
-### Run
-
-```bash
-npm start
-```
 ## Credits
 
 https://www.udemy.com/course/react-front-to-back-2022/ </br>
